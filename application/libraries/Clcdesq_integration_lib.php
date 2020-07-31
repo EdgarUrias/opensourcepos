@@ -249,7 +249,7 @@ class Clcdesq_integration_lib
 					'Producer'				=> $this->get_producer_user_ao_array($attribute_values[$config_data['clcdesq_producer']]['attribute_value']),
 					'ProductStatusProducer' => $this->get_product_status_producer_ao_array($product['deleted']),
 					'PriceCurrency'			=> $config_data['currency_code'] !== '' ? $config_data['currency_code'] : NULL,
-					'Published' 			=> ($product['deleted'] === '0'),
+					'Published' 			=> !$product['deleted'],
 					'PublisherRRP'			=> (float)$attribute_values[$config_data['clcdesq_publisherrrp']]['attribute_decimal'],
 					'ReducedPrice'			=> (float)$attribute_values[$config_data['clcdesq_reducedprice']]['attribute_decimal'],
 					'ReducedPriceStartDate'	=> $attribute_values[$config_data['clcdesq_reducedpricestartdate']]['attribute_date'],
@@ -774,11 +774,11 @@ class Clcdesq_integration_lib
 			//$data['category']->$attribute['location']->$attribute->['category']
 			switch($level)
 			{
-				case 0: //Category (Books, Media, Gifts, etc.)
+				case 0: //Location Attribute(Gift and Travel, Reference, Azerbaijani, etc.)
 					$next_title = $this->CI->Attribute->get_attribute_value($item_id, (int)$this->CI->Appconfig->get('clcdesq_location'))->attribute_value;
 					break;
 
-				case 1: //Location Attribute(Gift and Travel, Reference, Azerbaijani, etc.)
+				case 1: //Category (Dictionaries, Local Interests, etc)
 					$next_title = $this->CI->Attribute->get_attribute_value($item_id, (int)$this->CI->Appconfig->get('clcdesq_category'))->attribute_value;
 					break;
 
